@@ -9,4 +9,7 @@ with Session(bind=engine) as session:
     p1=m.Product(name='Молоко')
     session.add(p1)
 
+    p1=m.Type(name="Электроника", undertype="Телефон")
+    session.add(p1)
+
     session.commit()
