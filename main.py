@@ -34,6 +34,20 @@ def create_product(product:pyd.CreateProduct, db:Session=Depends(get_db)):
     db.commit()
     return(product_db)
 
+@app.delete("/product/{product_id}")
+def delete_product(product_id:int,db:Session=Depends(get_db)):
+    product=db.query(m.Product).filter(m.Product.id==product_id).first()
+
+    if not product:
+        raise HTTPException(404, 'Товар не найден')
+    db.delete(product)
+    db.commit()
+    return {"msg": "Товар удален"}
+
+
+
+
+
 @app.get('/types', response_model=List[pyd.BaseType])
 def get_all_types(db:Session=Depends(get_db)):
     types=db.query(m.Type).all()
